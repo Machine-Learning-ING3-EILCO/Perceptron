@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Neuron {
 	double []  W;
@@ -47,6 +48,25 @@ public class Neuron {
 		return  predict;
 	}
 	
-	
+	public double errorRate(DataFrame df) {
+		double error=0; double errorRate=0;
+		int cpt=0; //nbr d'erreur
+		//appeler pour chaque ligne d'entrée du df la fonction predict
+		//comparer le return de predict avec la valeur y correspondante dans le fichier csv
+
+		for (int index = 0; index <df.getExemples().size(); index++) {
+			if(predict(df.getExemples().get(index).getX()) != df.getExemples().get(index).getY()) {
+				error= predict(df.getExemples().get(index).getX()) - df.getExemples().get(index).getY();
+				cpt++;
+			}
+			errorRate=cpt/df.getExemples().size();
+		}
+		
+		return errorRate;
+	}
+	@Override
+	public String toString() {
+		return "Neuron [W=" + Arrays.toString(W) + ", threshold=" + threshold + ", output=" + output + "]";
+	}
 	
 }
